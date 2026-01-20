@@ -1,28 +1,44 @@
 <div class="auth__container">
   <div class="image__container">
-    <!-- <img class="road-img" src="assets/img/road drone view.jpg" alt="Road Drone View" /> -->
     <div class="image__content">
       <h3>WELCOME TO SAFE ROAD</h3>
       <h4>Get started to make every journey safer.</h4>
     </div>
   </div>
-  <div class="form__container">
-    <h2>Create an account</h2>
-    <form>
-      <input type="text" placeholder="First Name" />
-      <input type="text" placeholder="Last Name" />
-      <input type="email" placeholder="Email" />
-      <input type="password" placeholder="Password" />
-      <div class="checkbox-container">
-        <input type="checkbox" id="terms" />
-        <label for="terms">I agree to the <a href="#">Terms & Conditions</a></label>
-      </div>
-      <button type="submit">Create Account</button>
-      <div class="social-login">
-        <p>Or register with</p>
-        <button class="google">Google</button>
-        <button class="apple">Apple</button>
-      </div>
-    </form>
+  <div class="form__container flex justify-center items-center">
+    <div>
+      <h2 class="form__heading">Create an account</h2>
+      <p class="form__paragraph">
+        {{ isLoginMode() ? `Don't have an account? Get started` : 'Already have an account?' }}
+      </p>
+      <button type="button" class="btn_auth" (click)="isLoginMode.set(!isLoginMode())">
+        {{ isLoginMode() ? 'Sign up' : 'Login' }}
+      </button>
+      <form class="auth__form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        @if (!isLoginMode()) {
+          <div class="user__information">
+            <input
+              class="small_input"
+              type="text"
+              placeholder="First Name"
+              id="firstname"
+              formControlName="firstName"
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              id="lastname"
+              formControlName="lastName"
+              class="small_input"
+            />
+          </div>
+        }
+        <input type="email" placeholder="Email" id="email" formControlName="email" />
+        <input type="password" placeholder="Password" id="password" formControlName="password" />
+        <button type="submit" class="btn_create">
+          {{ isLoginMode() ? 'Log in' : 'Create Account' }}
+        </button>
+      </form>
+    </div>
   </div>
 </div>
