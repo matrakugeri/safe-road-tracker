@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-auth',
@@ -9,6 +10,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class Auth {
   private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
   form: FormGroup = this.fb.group({
     firstName: ['', [Validators.required, Validators.minLength(3)]],
     lastName: ['', [Validators.required, Validators.minLength(3)]],
@@ -18,8 +20,8 @@ export class Auth {
   isLoginMode = signal<boolean>(false);
 
   onSubmit() {
-    if (this.isLoginMode()) {
+    if (!this.isLoginMode()) {
+      this.authService.register(this.form.value).subscribe();
     }
-    console.log(this.form.value);
   }
 }

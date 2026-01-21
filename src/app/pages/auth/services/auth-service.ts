@@ -1,8 +1,33 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { environment } from '../../../../environments/environment';
+import { User, UserCredentials } from '../models/user-model';
+import { tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private http = inject(HttpClient);
   constructor() {}
 
-  register(email: string, password: string) {}
+  register(user: UserCredentials) {
+    return this.http
+      .post<Omit<User, 'password'>>(`${environment.apiUrl}/users/register`, user)
+      .pipe(
+        tap({
+          next: (data) => console.log(data),
+          error: (err) => console.log(err),
+        }),
+      );
+  }
+
+  login(email: string, password: string) {
+    return this.http
+      .post<Omit<User, 'password'>>(`${environment.apiUrl}/users/login`, { email, password })
+      .pipe(
+        tap({
+          next: (data) => console.log(data),
+          error: (err) => console.log(err),
+        }),
+      );
+  }
 }
