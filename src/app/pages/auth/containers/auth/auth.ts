@@ -1,6 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
+import { Store } from '@ngrx/store';
+import { login } from '../../auth-store/auth.actions';
+import { authSelector } from '../../auth-store/auth.selectors';
 
 @Component({
   selector: 'app-auth',
@@ -19,18 +22,15 @@ export class Auth {
   });
   isLoginMode = signal<boolean>(false);
   submitted = signal<boolean>(false);
+  private store = inject(Store);
 
   onSubmit() {
     this.submitted.set(true);
     if (!this.isLoginMode() && this.form.valid) {
       this.submitted.set(false);
-      this.authService.register(this.form.value).subscribe();
     } else if (this.isLoginMode() && this.form.valid) {
       this.submitted.set(false);
-      this.authService.login(this.form.value.email, this.form.value.password).subscribe({
-        next: (data) => console.log(data),
-        error: (err) => console.error(err),
-      });
+      this.store.dispatch(login(this.form.value));
     }
   }
 
