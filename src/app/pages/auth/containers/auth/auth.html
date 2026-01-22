@@ -24,6 +24,12 @@
               id="firstname"
               formControlName="firstName"
             />
+            @if (isInvalid('firstName') || isInvalid('lastName')) {
+              <p class="control-error">
+                <strong> First name </strong> and <strong>Last name</strong> are required and should
+                have atleast 3 chars
+              </p>
+            }
             <input
               type="text"
               placeholder="Last Name"
@@ -33,8 +39,18 @@
             />
           </div>
         }
-        <input type="email" placeholder="Email" id="email" formControlName="email" />
-        <input type="password" placeholder="Password" id="password" formControlName="password" />
+        <div class="placeholder">
+          <input type="email" placeholder="Email" id="email" formControlName="email" />
+          @if (isInvalid('email')) {
+            <p class="control-error">Email is required and must be valid</p>
+          }
+        </div>
+        <div class="placeholder">
+          <input type="password" placeholder="Password" id="password" formControlName="password" />
+          @if (isInvalid('password')) {
+            <p class="control-error">Password is required and must be valid</p>
+          }
+        </div>
         <button type="submit" class="btn_create">
           {{ isLoginMode() ? 'Log in' : 'Create Account' }}
         </button>

@@ -18,10 +18,24 @@ export class Auth {
     password: ['', [Validators.required, Validators.minLength(8)]],
   });
   isLoginMode = signal<boolean>(false);
+  submitted = signal<boolean>(false);
 
   onSubmit() {
-    if (!this.isLoginMode()) {
+    this.submitted.set(true);
+    if (!this.isLoginMode() && this.form.valid) {
+      this.submitted.set(false);
       this.authService.register(this.form.value).subscribe();
+    } else if (this.isLoginMode() && this.form.valid) {
+      this.submitted.set(false);
+      this.authService.login(this.form.value.email, this.form.value.password).subscribe({
+        next: (data) => console.log(data),
+        error: (err) => console.error(err),
+      });
     }
+  }
+
+  isInvalid(controlField: string) {
+    const control = this.form.get(controlField);
+    return control?.invalid && this.submitted();
   }
 }

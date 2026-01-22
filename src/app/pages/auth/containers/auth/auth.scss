@@ -90,6 +90,7 @@ select:-webkit-autofill {
 .user__information {
   display: flex;
   gap: 20px;
+  position: relative;
 }
 
 .auth__form input {
@@ -159,3 +160,42 @@ select:-webkit-autofill {
 .btn_auth:hover {
   background-color: #927bd8;
 }
+
+.control-error {
+  position: absolute;
+  bottom: -18px;
+  color: rgb(223, 96, 96);
+  font-size: 12px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}
+
+.placeholder {
+  position: relative;
+}
+
+// .btn_create:disabled {
+//   cursor: not-allowed;
+//   opacity: 0.5;
+// }
