@@ -4,12 +4,13 @@ import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
 import { authReducer } from './pages/auth/auth-store/auth.reducer';
 import { provideEffects } from '@ngrx/effects';
+import { AuthEffects } from './pages/auth/auth-store/auth.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes, withViewTransitions(), withComponentInputBinding()),
+    provideRouter(routes, withComponentInputBinding()),
     provideStore({ auth: authReducer }),
-    provideEffects(),
+    provideEffects([AuthEffects]),
   ],
 };
