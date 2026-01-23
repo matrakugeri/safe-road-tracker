@@ -8,4 +8,12 @@ export const loginSuccess = createAction(
 );
 export const loginFailure = createAction(`[User Login Failure]`, props<{ error: string }>());
 
-export const register = createAction(`[User Register]`);
+export const register = createAction(
+  `[User Register]`,
+  props<{ firstName: string; lastName: string; email: string; password: string }>(),
+);
+export const registerSuccess = createAction(
+  `[User Register Success]`,
+  props<{ user: User; token: string }>(),
+);
+export const registerFailure = createAction(`[User Register Failure]`, props<{ error: string }>);
