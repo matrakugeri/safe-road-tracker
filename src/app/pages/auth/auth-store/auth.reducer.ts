@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { User } from '../models/user-model';
-import { register } from './auth.actions';
+import { login, loginFailure, loginSuccess, register } from './auth.actions';
 
 export interface AuthState {
   user: null | User;
@@ -20,5 +20,22 @@ const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
-  // on(register, (state:AuthState) => {state.user = }),
+  on(login, (state) => {
+    console.log('test');
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+  on(loginSuccess, (state, { user, token }) => ({
+    ...state,
+    user,
+    token,
+    loaded: true,
+    loading: false,
+  })),
+
+  on(loginFailure, (state, { error }) => {
+    return { ...state, error };
+  }),
 );
