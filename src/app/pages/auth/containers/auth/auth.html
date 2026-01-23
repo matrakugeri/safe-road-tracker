@@ -11,7 +11,7 @@
       <p class="form__paragraph">
         {{ isLoginMode() ? `Don't have an account? Get started` : 'Already have an account?' }}
       </p>
-      <button type="button" class="btn_auth" (click)="isLoginMode.set(!isLoginMode())">
+      <button type="button" class="btn_auth" (click)="onClick()">
         {{ isLoginMode() ? 'Sign up' : 'Login' }}
       </button>
       <form class="auth__form" [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -58,3 +58,5 @@
     </div>
   </div>
 </div>
+
+{{ auth$() | json }}
