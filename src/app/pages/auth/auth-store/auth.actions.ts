@@ -16,4 +16,6 @@ export const registerSuccess = createAction(
   `[User Register Success]`,
   props<{ user: User; token: string }>(),
 );
-export const registerFailure = createAction(`[User Register Failure]`, props<{ error: string }>);
+export const registerFailure = createAction(`[User Register Failure]`, props<{ error: string }>());
+
+export const clearError = createAction(`[Clear Error Action]`);
