@@ -1,0 +1,26 @@
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else {
+  <div>
+    <h2 class="form__heading">Log in</h2>
+    <p class="form__paragraph">Don't have an account? Get started</p>
+    <button type="button" class="btn_auth" (click)="onClick()">Sign Up</button>
+    <form class="auth__form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="placeholder">
+        <input type="email" placeholder="Email" id="email" formControlName="email" />
+        @if (isInvalid('email') && isNotEmpty()) {
+          <p class="control-error"><strong>Email</strong> is required and must be valid</p>
+        }
+      </div>
+      <div class="placeholder">
+        <input type="password" placeholder="Password" id="password" formControlName="password" />
+        @if (auth().error) {
+          <p class="control-error">{{ auth().error }}</p>
+        } @else if (!isNotEmpty() && submitted()) {
+          <p class="control-error">Please fill all the fields to proceed</p>
+        }
+      </div>
+      <button type="submit" class="btn_create">Log in</button>
+    </form>
+  </div>
+}
