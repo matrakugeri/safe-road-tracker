@@ -4,11 +4,22 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'auth',
+    redirectTo: 'login',
   },
   {
-    path: 'auth',
-    loadComponent: () => import('./pages/auth/containers/auth/auth').then((m) => m.Auth),
+    path: '',
+    loadComponent: () => import('../app/layout/auth-layout/auth-layout').then((m) => m.AuthLayout),
+    children: [
+      {
+        path: 'login',
+        loadComponent: () => import('./pages/auth/containers/login/login').then((m) => m.Login),
+      },
+      {
+        path: 'signup',
+        loadComponent: () =>
+          import('../app/pages/auth/containers/sign-up/sign-up').then((m) => m.SignUp),
+      },
+    ],
   },
   {
     path: '',
@@ -27,6 +38,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'auth',
+    redirectTo: 'map',
   },
 ];

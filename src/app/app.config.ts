@@ -9,7 +9,7 @@ import { AuthEffects } from './pages/auth/auth-store/auth.effects';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes, withComponentInputBinding()),
+    provideRouter(routes, withComponentInputBinding(), withViewTransitions()),
     provideStore({ auth: authReducer }),
     provideEffects([AuthEffects]),
   ],
