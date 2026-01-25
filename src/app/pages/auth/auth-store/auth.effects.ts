@@ -21,11 +21,6 @@ export class AuthEffects {
               token: res.token,
             }),
           ),
-          tap({
-            next: (data) => localStorage.setItem('jwt', data.token),
-            error: (err) => console.log(err),
-            complete: () => this.router.navigate(['/map']),
-          }),
           catchError((err) =>
             of(
               loginFailure({
@@ -55,10 +50,6 @@ export class AuthEffects {
                 token: res.token,
               }),
             ),
-            tap({
-              next: (data) => localStorage.setItem('jwt', data.token),
-              complete: () => this.router.navigate(['/map']),
-            }),
             catchError((err) => {
               return of(
                 loginFailure({
@@ -69,5 +60,18 @@ export class AuthEffects {
           );
       }),
     ),
+  );
+
+  success$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loginSuccess, registerSuccess),
+        tap({
+          next: (action) => {
+            (localStorage.setItem('jwt', action.token), this.router.navigate(['/map']));
+          },
+        }),
+      ),
+    { dispatch: false },
   );
 }
