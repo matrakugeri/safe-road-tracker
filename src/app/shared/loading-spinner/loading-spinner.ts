@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-loading-spinner',
   imports: [],
-  template: `<span class="loader"></span>`,
+  template: ` <span class="loader"></span> `,
   styles: `
     .loader {
-      width: 48px;
-      height: 48px;
+      width: 60px;
+      height: 60px;
       border: 3px solid #fff;
       border-radius: 50%;
       display: inline-block;
@@ -22,8 +22,8 @@ import { Component } from '@angular/core';
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 40px;
-      height: 40px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       border: 3px solid;
       border-color: #ff3d00 transparent;

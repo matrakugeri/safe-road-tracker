@@ -1,0 +1,49 @@
+@if (loading()) {
+  <app-loading-spinner></app-loading-spinner>
+} @else {
+  <div>
+    <h2 class="form__heading">Create an account</h2>
+    <p class="form__paragraph">Already have an account?</p>
+    <button type="button" class="btn_auth" (click)="onClick()">Login</button>
+    <form class="auth__form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="user__information">
+        <input
+          class="small_input"
+          type="text"
+          placeholder="First Name"
+          id="firstname"
+          formControlName="firstName"
+        />
+        @if (isInvalid('firstName') || isInvalid('lastName')) {
+          <p class="control-error">
+            <strong> First name </strong> and <strong>Last name</strong> are required and must have
+            atleast 3 chars
+          </p>
+        }
+        <input
+          type="text"
+          placeholder="Last Name"
+          id="lastname"
+          formControlName="lastName"
+          class="small_input"
+        />
+      </div>
+      <div class="placeholder">
+        <input type="email" placeholder="Email" id="email" formControlName="email" />
+        @if (isInvalid('email')) {
+          <p class="control-error"><strong>Email</strong> is required and must be valid</p>
+        }
+      </div>
+      <div class="placeholder">
+        <input type="password" placeholder="Password" id="password" formControlName="password" />
+
+        @if (isInvalid('password')) {
+          <p class="control-error">
+            <strong>Password</strong> is required and must have atleast 8 chars
+          </p>
+        }
+      </div>
+      <button type="submit" class="btn_create">Log in</button>
+    </form>
+  </div>
+}

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { User, UserCredentials, UserResponse } from '../models/user-model';
-import { switchMap, tap } from 'rxjs';
+import { delay, switchMap, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -11,6 +11,7 @@ export class AuthService {
 
   register(user: UserCredentials) {
     return this.http.post<UserResponse>(`${environment.apiUrl}/users/register`, user).pipe(
+      delay(1000),
       tap({
         next: (data) => console.log(data),
         error: (err) => console.log(err),
@@ -22,6 +23,7 @@ export class AuthService {
     return this.http
       .post<UserResponse>(`${environment.apiUrl}/users/login`, { email, password })
       .pipe(
+        delay(1000),
         tap({
           next: (data) => console.log(data),
           error: (err) => console.log(err),
