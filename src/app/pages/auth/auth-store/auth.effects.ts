@@ -61,15 +61,12 @@ export class AuthEffects {
       }),
     ),
   );
-
   success$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(loginSuccess, registerSuccess),
         tap({
-          next: (action) => {
-            (localStorage.setItem('jwt', action.token), this.router.navigate(['/map']));
-          },
+          next: (action) => this.router.navigate(['/map']),
         }),
       ),
     { dispatch: false },
