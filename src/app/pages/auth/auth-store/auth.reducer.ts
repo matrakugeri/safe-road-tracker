@@ -1,6 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
 import { User } from '../models/user-model';
-import { login, loginFailure, loginSuccess, register } from './auth.actions';
+import {
+  clearError,
+  login,
+  loginFailure,
+  loginSuccess,
+  register,
+  registerFailure,
+  registerSuccess,
+} from './auth.actions';
 
 export interface AuthState {
   user: null | User;
@@ -34,8 +42,27 @@ export const authReducer = createReducer(
     loaded: true,
     loading: false,
   })),
-
   on(loginFailure, (state, { error }) => {
-    return { ...state, error };
+    console.log(error);
+    return { ...state, error, loading: false };
   }),
+  on(register, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(registerSuccess, (state, { user, token }) => ({
+    ...state,
+    user,
+    token,
+    loaded: true,
+    loading: false,
+  })),
+  on(registerFailure, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(clearError, (state) => ({
+    ...state,
+    error: null,
+  })),
 );
