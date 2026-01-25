@@ -1,13 +1,15 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { login, loginFailure, loginSuccess, register } from './auth.actions';
+import { login, loginFailure, loginSuccess, register, registerSuccess } from './auth.actions';
 import { AuthService } from '../services/auth-service';
-import { catchError, map, of, switchMap, tap } from 'rxjs';
+import { catchError, debounceTime, delay, map, of, switchMap, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
   actions$ = inject(Actions);
   authService = inject(AuthService);
+  router = inject(Router);
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(login),
@@ -19,14 +21,52 @@ export class AuthEffects {
               token: res.token,
             }),
           ),
+          tap({
+            next: (data) => localStorage.setItem('jwt', data.token),
+            error: (err) => console.log(err),
+            complete: () => this.router.navigate(['/map']),
+          }),
           catchError((err) =>
             of(
               loginFailure({
-                error: err.error?.message || 'Login failed',
+                error: err.error.message,
               }),
             ),
           ),
         );
+      }),
+    ),
+  );
+  register$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(register),
+      switchMap((action) => {
+        return this.authService
+          .register({
+            firstName: action.firstName,
+            lastName: action.lastName,
+            email: action.email,
+            password: action.password,
+          })
+          .pipe(
+            map((res) =>
+              registerSuccess({
+                user: res.data,
+                token: res.token,
+              }),
+            ),
+            tap({
+              next: (data) => localStorage.setItem('jwt', data.token),
+              complete: () => this.router.navigate(['/map']),
+            }),
+            catchError((err) => {
+              return of(
+                loginFailure({
+                  error: err.error.message,
+                }),
+              );
+            }),
+          );
       }),
     ),
   );
