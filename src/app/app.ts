@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LoadingSpinner } from './shared/loading-spinner/loading-spinner';
+import { loadCurrentUser } from './pages/auth/auth-store/auth.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,9 @@ import { LoadingSpinner } from './shared/loading-spinner/loading-spinner';
 })
 export class App {
   protected readonly title = signal('safe-road-tracker');
+  store = inject(Store);
+
+  ngOnInit() {
+    this.store.dispatch(loadCurrentUser());
+  }
 }

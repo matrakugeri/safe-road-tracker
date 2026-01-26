@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth-guard';
+import { nonAuthGuard } from './core/guards/non-auth-guard';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'login',
+    redirectTo: 'map',
   },
   {
     path: '',
@@ -13,11 +15,13 @@ export const routes: Routes = [
       {
         path: 'login',
         loadComponent: () => import('./pages/auth/containers/login/login').then((m) => m.Login),
+        canMatch: [nonAuthGuard],
       },
       {
         path: 'signup',
         loadComponent: () =>
           import('../app/pages/auth/containers/sign-up/sign-up').then((m) => m.SignUp),
+        canMatch: [nonAuthGuard],
       },
     ],
   },
@@ -28,6 +32,7 @@ export const routes: Routes = [
       {
         path: 'map',
         loadComponent: () => import('./pages/map/containers/map/map').then((m) => m.Map),
+        canMatch: [authGuard],
       },
       {
         path: 'report',
