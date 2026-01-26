@@ -7,9 +7,8 @@ export interface User {
 }
 
 export interface UserResponse {
-  data: User;
-  token: string;
   status: string;
+  data: User;
 }
 
 export interface UserCredentials {
