@@ -1,6 +1,15 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { login, loginFailure, loginSuccess, register, registerSuccess } from './auth.actions';
+import {
+  loadCurrentUser,
+  loadCurrentUserSuccess,
+  loadCurrentUserFailure,
+  login,
+  loginFailure,
+  loginSuccess,
+  register,
+  registerSuccess,
+} from './auth.actions';
 import { AuthService } from '../services/auth-service';
 import { catchError, debounceTime, delay, map, of, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
@@ -18,7 +27,6 @@ export class AuthEffects {
           map((res) =>
             loginSuccess({
               user: res.data,
-              token: res.token,
             }),
           ),
           catchError((err) =>
@@ -47,7 +55,6 @@ export class AuthEffects {
             map((res) =>
               registerSuccess({
                 user: res.data,
-                token: res.token,
               }),
             ),
             catchError((err) => {
@@ -61,6 +68,22 @@ export class AuthEffects {
       }),
     ),
   );
+  checkUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCurrentUser),
+      switchMap(() =>
+        this.authService.isLoggedIn().pipe(
+          map((res) =>
+            loadCurrentUserSuccess({
+              user: res.data,
+            }),
+          ),
+          catchError((err) => of(loadCurrentUserFailure())),
+        ),
+      ),
+    ),
+  );
+
   success$ = createEffect(
     () =>
       this.actions$.pipe(
