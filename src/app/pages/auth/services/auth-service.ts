@@ -37,4 +37,13 @@ export class AuthService {
       }),
     );
   }
+
+  logout() {
+    return this.http.get<{ message: string }>(`${environment.apiUrl}/users/logout`).pipe(
+      tap({
+        next: (data) => console.log(data),
+        error: (err) => console.log(err),
+      }),
+    );
+  }
 }

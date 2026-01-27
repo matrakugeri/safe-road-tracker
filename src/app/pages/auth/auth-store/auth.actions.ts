@@ -18,3 +18,6 @@ export const loadCurrentUserSuccess = createAction(
   props<{ user: User }>(),
 );
 export const loadCurrentUserFailure = createAction(`[Load Current User Failure]`);
+
+export const logout = createAction(`[User Logout]`);
+export const logoutSuccess = createAction(`[User Logout Success]`);

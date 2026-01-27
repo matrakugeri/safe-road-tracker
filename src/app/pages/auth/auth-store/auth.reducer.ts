@@ -8,6 +8,8 @@ import {
   login,
   loginFailure,
   loginSuccess,
+  logout,
+  logoutSuccess,
   register,
   registerFailure,
   registerSuccess,
@@ -49,7 +51,7 @@ export const authReducer = createReducer(
   })),
   on(loginFailure, (state, { error }) => {
     console.log(error);
-    return { ...state, error, loading: false };
+    return { ...state, error, loading: false, authChecked: false };
   }),
   on(register, (state) => ({
     ...state,
@@ -64,21 +66,34 @@ export const authReducer = createReducer(
   })),
   on(registerFailure, (state, { error }) => ({
     ...state,
+    authChecked: false,
     error,
   })),
-
   on(loadCurrentUser, (state) => ({
     ...state,
+    loading: true,
+    loaded: false,
   })),
-  on(loadCurrentUserSuccess, (state, { user }) => ({
-    ...state,
-    user,
-    authChecked: true,
-    error: null,
-  })),
+  on(loadCurrentUserSuccess, (state, { user }) => {
+    console.log('user set', user);
+    return {
+      ...state,
+      loading: false,
+      loaded: true,
+      user,
+      authChecked: true,
+      error: null,
+    };
+  }),
   on(loadCurrentUserFailure, (state) => ({
     ...state,
-    authChecked: true,
+    loading: false,
+    authChecked: false,
+  })),
+  on(logoutSuccess, (state) => ({
+    ...state,
+    authChecked: false,
+    user: null,
   })),
   on(clearError, (state) => ({
     ...state,

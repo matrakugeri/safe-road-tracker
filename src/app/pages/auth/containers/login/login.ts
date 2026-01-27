@@ -19,8 +19,8 @@ export class Login {
   private readonly store: Store<AuthState> = inject(Store);
   private router = inject(Router);
   form: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: [''],
+    email: ['suser@gmail.com', [Validators.required, Validators.email]],
+    password: ['suser12345'],
   });
   isLoginMode = signal<boolean>(false);
   submitted = signal<boolean>(false);

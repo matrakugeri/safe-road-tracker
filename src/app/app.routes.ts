@@ -15,13 +15,13 @@ export const routes: Routes = [
       {
         path: 'login',
         loadComponent: () => import('./pages/auth/containers/login/login').then((m) => m.Login),
-        canMatch: [nonAuthGuard],
+        // canMatch: [nonAuthGuard],
       },
       {
         path: 'signup',
         loadComponent: () =>
           import('../app/pages/auth/containers/sign-up/sign-up').then((m) => m.SignUp),
-        canMatch: [nonAuthGuard],
+        // canMatch: [nonAuthGuard],
       },
     ],
   },
@@ -32,7 +32,7 @@ export const routes: Routes = [
       {
         path: 'map',
         loadComponent: () => import('./pages/map/containers/map/map').then((m) => m.Map),
-        canMatch: [authGuard],
+        canActivate: [authGuard],
       },
       {
         path: 'report',

@@ -9,6 +9,8 @@ import {
   loginSuccess,
   register,
   registerSuccess,
+  logout,
+  logoutSuccess,
 } from './auth.actions';
 import { AuthService } from '../services/auth-service';
 import { catchError, debounceTime, delay, map, of, switchMap, tap } from 'rxjs';
@@ -81,6 +83,19 @@ export class AuthEffects {
           catchError((err) => of(loadCurrentUserFailure())),
         ),
       ),
+    ),
+  );
+
+  logout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(logout),
+      switchMap(() => {
+        return this.authService.logout().pipe(
+          map((res) => {
+            return logoutSuccess();
+          }),
+        );
+      }),
     ),
   );
 
