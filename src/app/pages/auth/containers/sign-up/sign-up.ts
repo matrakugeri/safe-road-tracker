@@ -6,7 +6,6 @@ import { loadingSelector, stateSelector } from '../../auth-store/auth.selectors'
 import { clearError, register } from '../../auth-store/auth.actions';
 import { Router } from '@angular/router';
 import { LoadingSpinner } from '../../../../shared/loading-spinner/loading-spinner';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-sign-up',
