@@ -3,14 +3,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../auth-store/auth.reducer';
 import { loadingSelector, stateSelector } from '../../auth-store/auth.selectors';
-import { register } from '../../auth-store/auth.actions';
+import { clearError, register } from '../../auth-store/auth.actions';
 import { Router } from '@angular/router';
 import { LoadingSpinner } from '../../../../shared/loading-spinner/loading-spinner';
 import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-sign-up',
-  imports: [ReactiveFormsModule, LoadingSpinner, JsonPipe],
+  imports: [ReactiveFormsModule, LoadingSpinner],
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.scss',
 })
@@ -40,6 +40,7 @@ export class SignUp {
 
   onClick() {
     this.router.navigate(['/login']);
+    this.store.dispatch(clearError());
   }
 
   isInvalid(controlField: string) {

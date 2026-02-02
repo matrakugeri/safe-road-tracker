@@ -8,7 +8,9 @@ export interface User {
 
 export interface UserResponse {
   status: string;
-  data: User;
+  data: {
+    user: User;
+  };
 }
 
 export interface UserCredentials {

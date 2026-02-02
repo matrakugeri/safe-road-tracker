@@ -13,6 +13,7 @@ export const registerFailure = createAction(`[User Register Failure]`, props<{ e
 
 export const clearError = createAction(`[Clear Error Action]`);
 export const loadCurrentUser = createAction(`[Load Current User]`);
+
 export const loadCurrentUserSuccess = createAction(
   `[Load Current User Success]`,
   props<{ user: User }>(),
@@ -21,3 +22,5 @@ export const loadCurrentUserFailure = createAction(`[Load Current User Failure]`
 
 export const logout = createAction(`[User Logout]`);
 export const logoutSuccess = createAction(`[User Logout Success]`);
+
+export const setUser = createAction(`[Set User Local Storage]`, props<{ user: User }>());

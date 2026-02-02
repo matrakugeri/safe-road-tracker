@@ -13,6 +13,7 @@ import {
   register,
   registerFailure,
   registerSuccess,
+  setUser,
 } from './auth.actions';
 
 export interface AuthState {
@@ -41,14 +42,10 @@ export const authReducer = createReducer(
       error: null,
     };
   }),
-  on(loginSuccess, (state, { user }) => ({
-    ...state,
-    user,
-    error: null,
-    loaded: true,
-    loading: false,
-    authChecked: true,
-  })),
+  on(loginSuccess, (state, { user }) => {
+    console.log(user);
+    return { ...state, user, error: null, loaded: true, loading: false, authChecked: true };
+  }),
   on(loginFailure, (state, { error }) => {
     console.log(error);
     return { ...state, error, loading: false, authChecked: false };
@@ -90,10 +87,19 @@ export const authReducer = createReducer(
     loading: false,
     authChecked: false,
   })),
+  on(logout, (state) => ({
+    ...state,
+    loading: true,
+    authChecked: false,
+  })),
   on(logoutSuccess, (state) => ({
     ...state,
-    authChecked: false,
+    loading: false,
     user: null,
+  })),
+  on(setUser, (state, { user }) => ({
+    ...state,
+    user,
   })),
   on(clearError, (state) => ({
     ...state,

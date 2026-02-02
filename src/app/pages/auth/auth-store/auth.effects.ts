@@ -11,6 +11,7 @@ import {
   registerSuccess,
   logout,
   logoutSuccess,
+  setUser,
 } from './auth.actions';
 import { AuthService } from '../services/auth-service';
 import { catchError, debounceTime, delay, map, of, switchMap, tap } from 'rxjs';
@@ -26,11 +27,13 @@ export class AuthEffects {
       ofType(login),
       switchMap(({ email, password }) => {
         return this.authService.login(email, password).pipe(
-          map((res) =>
-            loginSuccess({
-              user: res.data,
-            }),
-          ),
+          map((res) => {
+            console.log(res);
+            localStorage.setItem('user', JSON.stringify(res.data.user));
+            return loginSuccess({
+              user: res.data.user,
+            });
+          }),
           catchError((err) =>
             of(
               loginFailure({
@@ -54,11 +57,12 @@ export class AuthEffects {
             password: action.password,
           })
           .pipe(
-            map((res) =>
-              registerSuccess({
-                user: res.data,
-              }),
-            ),
+            map((res) => {
+              localStorage.setItem('user', JSON.stringify(res.data.user));
+              return registerSuccess({
+                user: res.data.user,
+              });
+            }),
             catchError((err) => {
               return of(
                 loginFailure({
@@ -77,7 +81,7 @@ export class AuthEffects {
         this.authService.isLoggedIn().pipe(
           map((res) =>
             loadCurrentUserSuccess({
-              user: res.data,
+              user: res.data.user,
             }),
           ),
           catchError((err) => of(loadCurrentUserFailure())),
@@ -92,6 +96,8 @@ export class AuthEffects {
       switchMap(() => {
         return this.authService.logout().pipe(
           map((res) => {
+            localStorage.clear();
+            this.router.navigate(['/login']);
             return logoutSuccess();
           }),
         );

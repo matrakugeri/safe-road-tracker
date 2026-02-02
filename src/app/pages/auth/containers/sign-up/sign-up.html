@@ -42,9 +42,11 @@
             <strong>Password</strong> is required and must have atleast 8 chars
           </p>
         }
+        @if (auth().error) {
+          <p class="control-error">{{ auth().error }}</p>
+        }
       </div>
       <button type="submit" class="btn_create">Log in</button>
     </form>
   </div>
 }
-{{ auth() | json }}

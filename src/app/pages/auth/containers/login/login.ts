@@ -10,7 +10,7 @@ import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, LoadingSpinner, JsonPipe],
+  imports: [ReactiveFormsModule, LoadingSpinner],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -19,8 +19,8 @@ export class Login {
   private readonly store: Store<AuthState> = inject(Store);
   private router = inject(Router);
   form: FormGroup = this.fb.group({
-    email: ['suser@gmail.com', [Validators.required, Validators.email]],
-    password: ['suser12345'],
+    email: ['', [Validators.required, Validators.email]],
+    password: [''],
   });
   isLoginMode = signal<boolean>(false);
   submitted = signal<boolean>(false);

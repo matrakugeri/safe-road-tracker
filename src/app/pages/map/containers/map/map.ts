@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { stateSelector } from '../../../auth/auth-store/auth.selectors';
+import { authChecked, stateSelector } from '../../../auth/auth-store/auth.selectors';
 import { JsonPipe } from '@angular/common';
 import { logout } from '../../../auth/auth-store/auth.actions';
 import { Router } from '@angular/router';
@@ -14,10 +14,10 @@ import { Router } from '@angular/router';
 export class Map {
   private store = inject(Store);
   auth = this.store.selectSignal(stateSelector);
+  isAuthenticated = this.store.selectSignal(authChecked);
   router = inject(Router);
 
   onLogout() {
-    this.router.navigate(['/login']);
     this.store.dispatch(logout());
   }
 }

@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
+  isLoggedIn,
   loadingSelector,
   stateSelector,
   userSelector,
@@ -11,24 +12,14 @@ import { filter, map, Observable, switchMap, take } from 'rxjs';
 export const authGuard: CanActivateFn = (): Observable<boolean | UrlTree> => {
   const store = inject(Store);
   const router = inject(Router);
-  const user = store.select(userSelector);
-  const loading = store.select(loadingSelector);
-  const state = store.selectSignal(stateSelector);
+  const loggedIn = store.select(isLoggedIn);
 
-  return loading.pipe(
-    filter((loading) => !loading),
-    switchMap(() => user),
-    take(1),
-    map((user) => {
-      console.log(user);
-      if (user) return true;
-      return router.createUrlTree(['/login']);
+  return loggedIn.pipe(
+    map((isLoggedIn) => {
+      if (!isLoggedIn) {
+        return router.createUrlTree(['/login']);
+      }
+      return true;
     }),
   );
-  // console.log(user());
-
-  // if (user() && state().authChecked) return true;
-  // return router.createUrlTree(['/login']);
-
-  // return user() ? true : router.createUrlTree(['/login']);
 };
