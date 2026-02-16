@@ -6,7 +6,6 @@ import { clearError, login, register } from '../../auth-store/auth.actions';
 import { AuthState } from '../../auth-store/auth.reducer';
 import { LoadingSpinner } from '../../../../shared/loading-spinner/loading-spinner';
 import { Router } from '@angular/router';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-login',

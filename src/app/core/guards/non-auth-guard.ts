@@ -13,8 +13,7 @@ export const nonAuthGuard: CanMatchFn = () => {
   const store = inject(Store);
   const router = inject(Router);
 
-  return store.select(isLoggedIn).pipe(
-    take(1),
-    map((isLoggedIn) => (!isLoggedIn ? true : router.createUrlTree(['/map']))),
-  );
+  return store
+    .select(isLoggedIn)
+    .pipe(map((isLoggedIn) => (!isLoggedIn ? true : router.createUrlTree(['/map']))));
 };

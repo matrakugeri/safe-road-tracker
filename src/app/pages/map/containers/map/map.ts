@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { authChecked, stateSelector } from '../../../auth/auth-store/auth.selectors';
 import { JsonPipe } from '@angular/common';
@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-map',
-  imports: [JsonPipe],
   templateUrl: './map.html',
   styleUrl: './map.scss',
 })
