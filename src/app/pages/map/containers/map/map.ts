@@ -10,13 +10,4 @@ import { Router } from '@angular/router';
   templateUrl: './map.html',
   styleUrl: './map.scss',
 })
-export class Map {
-  private store = inject(Store);
-  auth = this.store.selectSignal(stateSelector);
-  isAuthenticated = this.store.selectSignal(authChecked);
-  router = inject(Router);
-
-  onLogout() {
-    this.store.dispatch(logout());
-  }
-}
+export class Map {}

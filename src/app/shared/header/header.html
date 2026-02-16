@@ -1,1 +1,16 @@
-<p>header works!</p>
+<header class="glass-header">
+  <div class="header-content">
+    <div class="logo">
+      <h1>SAFE <span class="highlight">ROAD</span></h1>
+    </div>
+    <nav class="nav-links">
+      <a [routerLink]="['/map']" routerLinkActive="active" class="nav-item">Dashboard</a>
+      <a [routerLink]="['/report']" routerLinkActive="active" class="nav-item">Report</a>
+      <a [routerLink]="['/statistics']" routerLinkActive="active" class="nav-item">Statistics</a>
+    </nav>
+    <div class="actions">
+      <button class="admin-btn" (click)="onLogout()">Log out</button>
+    </div>
+  </div>
+  <div class="header-loader-bar"></div>
+</header>
