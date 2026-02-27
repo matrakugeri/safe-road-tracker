@@ -1,1 +1,11 @@
-<div style="height: 300px; width: 300px" leaflet [leafletOptions]="options"></div>
+<div
+  class="map-container"
+  [style]="{
+    width: width(),
+  }"
+  leaflet
+  [leafletLayers]="layers"
+  [leafletLayersControl]="layersControl"
+  [leafletOptions]="options"
+  (leafletClick)="onMapClick($event)"
+></div>

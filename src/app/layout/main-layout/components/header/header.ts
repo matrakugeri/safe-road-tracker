@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { logout } from '../../pages/auth/auth-store/auth.actions';
+import { logout } from '../../../../pages/auth/auth-store/auth.actions';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
