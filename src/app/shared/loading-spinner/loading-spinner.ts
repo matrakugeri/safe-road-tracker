@@ -5,36 +5,30 @@ import { Component } from '@angular/core';
   imports: [],
   template: ` <span class="loader"></span> `,
   styles: `
+    @use 'variables.scss' as *;
     .loader {
+      display: inline-block;
       width: 60px;
       height: 60px;
-      border: 3px solid #fff;
+      background: #fff;
       border-radius: 50%;
-      display: inline-block;
       position: relative;
-      box-sizing: border-box;
-      animation: rotation 1s linear infinite;
+      animation: roll 1s ease-in-out infinite alternate;
     }
-    .loader::after {
+    .loader:after {
       content: '';
-      box-sizing: border-box;
       position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 52px;
-      height: 52px;
+      inset: 5px;
       border-radius: 50%;
-      border: 3px solid;
-      border-color: #ff3d00 transparent;
+      border: 5px solid;
+      border-color: $color-dark-blue transparent;
     }
-
-    @keyframes rotation {
+    @keyframes roll {
       0% {
-        transform: rotate(0deg);
+        transform: translateX(-150%) rotate(0deg);
       }
       100% {
-        transform: rotate(360deg);
+        transform: translateX(150%) rotate(360deg);
       }
     }
   `,

@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { LeafletDirective, LeafletModule } from '@bluehalo/ngx-leaflet';
-import { latLng, LeafletMouseEvent, tileLayer } from 'leaflet';
+import { circle, latLng, LeafletMouseEvent, tileLayer } from 'leaflet';
 import { Maps } from './maps';
 
 @Component({
@@ -30,8 +30,7 @@ export class LeafletMap {
     },
     overlays: {},
   };
-  layers = [this.layersControl.baseLayers['OpenStreetMap']];
-
+  defaultLayer = [this.layersControl.baseLayers['OpenStreetMap']];
   onMapClick(event: LeafletMouseEvent) {
     console.log(event);
     this.mapClicked.emit(event);

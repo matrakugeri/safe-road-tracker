@@ -1,3 +1,46 @@
-<div>
-  <app-leaflet-map [width]="'450px'" (mapClicked)="onMapClick($event)"></app-leaflet-map>
+<div class="report__container">
+  <div class="report-card">
+    <h2>Report an Issue</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <label>Issue Type</label>
+        <select [formField]="reportForm.type">
+          <option value="" disabled selected>Select type...</option>
+          <option value="Flooded Street">Flooded Street</option>
+          <option value="Pothole">Pothole</option>
+          <option value="Other Issue">Other Issue</option>
+        </select>
+        @if (reportForm.type().errors() && reportForm.type().touched()) {
+          @for (error of reportForm.type().errors(); track error) {
+            <p class="control-error">{{ error.message }}</p>
+          }
+        }
+      </div>
+
+      <div class="input-group">
+        <label>Description</label>
+        <textarea
+          [formField]="reportForm.description"
+          placeholder="Describe what's happening..."
+          rows="5"
+        ></textarea>
+      </div>
+
+      <div class="file-upload" (click)="fileInput.click()">
+        @if (!selectedFile()) {
+          <div class="upload-placeholder">
+            <span>Add Photos (Optional)</span>
+          </div>
+        } @else {
+          <div class="file-info">
+            <span>{{ selectedFile()?.name }}</span>
+          </div>
+        }
+        <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
+      </div>
+
+      <button type="submit" [disabled]="reportForm().invalid()">Submit Report</button>
+    </form>
+  </div>
+  <app-leaflet-map [width]="'700px'" (mapClicked)="onMapClick($event)"></app-leaflet-map>
 </div>
