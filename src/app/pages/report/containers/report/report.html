@@ -24,20 +24,39 @@
           placeholder="Describe what's happening..."
           rows="5"
         ></textarea>
+        @if (reportForm.description().touched() && reportForm.description().errors().length) {
+          <p class="control-error">
+            {{ reportForm.description().errors()[0].message }}
+          </p>
+        }
       </div>
 
       <div class="file-upload" (click)="fileInput.click()">
-        @if (!selectedFile()) {
-          <div class="upload-placeholder">
-            <span>Add Photos (Optional)</span>
-          </div>
-        } @else {
-          <div class="file-info">
-            <span>{{ selectedFile()?.name }}</span>
-          </div>
-        }
-        <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
+        <div class="upload-placeholder">
+          <span>Add Photos (Optional)</span>
+        </div>
+        <input
+          #fileInput
+          type="file"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+          hidden
+          multiple
+        />
       </div>
+
+      @if (selectedFiles().length) {
+        <div class="file-info">
+          @for (file of selectedFiles(); let i = $index; track i) {
+            <div class="image-preview">
+              <img [src]="getPreview(file)" />
+              <div class="icon-container">
+                <i class="material-icons" (click)="removeFile(i)">close</i>
+              </div>
+            </div>
+          }
+        </div>
+      }
 
       <button type="submit" [disabled]="reportForm().invalid()">Submit Report</button>
     </form>

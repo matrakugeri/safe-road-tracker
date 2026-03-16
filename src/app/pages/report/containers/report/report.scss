@@ -10,12 +10,12 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   font-family: 'Inter', sans-serif;
   margin-top: 20px;
-  height: 450px;
 }
 
 .report__container {
   display: flex;
   justify-content: center;
+  align-items: start;
   gap: 20px;
   margin-bottom: 20px;
 }
@@ -62,7 +62,7 @@ textarea:focus {
   padding: 15px;
   text-align: center;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   transition: all 0.3s;
 }
 
@@ -86,4 +86,37 @@ button {
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.file-info {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  margin-bottom: 30px;
+}
+
+.image-preview {
+  position: relative;
+}
+
+.image-preview img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.icon-container {
+  position: absolute;
+  top: 2px;
+  right: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.icon-container i {
+  color: black;
+  border-radius: 50%;
+  background-color: #aaaa;
+  font-size: 20px;
 }

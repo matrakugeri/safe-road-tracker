@@ -3,11 +3,8 @@ import { LeafletMap } from '../../../../shared/leaflet-map/leaflet-map';
 import { LeafletMouseEvent } from 'leaflet';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { form, FormField, minLength, required } from '@angular/forms/signals';
-
-export interface reportData {
-  type: string;
-  description: string;
-}
+import { reportData } from '../../models/reportModel';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-report',
@@ -16,7 +13,7 @@ export interface reportData {
   styleUrl: './report.scss',
 })
 export class Report {
-  selectedFile = signal<File | null>(null);
+  selectedFiles = signal<File[] | []>([]);
 
   reportModel = signal<reportData>({
     type: '',
@@ -34,9 +31,11 @@ export class Report {
   }
 
   onFileSelected(event: any) {
-    const file = event.target.files[0];
+    const file = event.target.files;
+    console.log(event.target.files.length);
     if (file) {
-      this.selectedFile.set(file);
+      this.selectedFiles.update((prev) => [...prev, ...event.target.files]);
+      console.log(this.selectedFiles());
     }
   }
 
@@ -45,9 +44,17 @@ export class Report {
     formData.append('type', this.reportForm.type().value());
     formData.append('description', this.reportForm.description().value());
 
-    const file = this.selectedFile();
-    if (file) {
-      formData.append('imageUrls', file, file.name);
-    }
+    // const file = this.selectedFile();
+    // if (file) {
+    //   formData.append('imageUrls', file, file.name);
+    // }
+  }
+
+  getPreview(file: File) {
+    return URL.createObjectURL(file);
+  }
+
+  removeFile(index: number) {
+    this.selectedFiles.update((files) => files.filter((el, i) => i !== index));
   }
 }
